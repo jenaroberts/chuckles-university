@@ -1,22 +1,50 @@
 import { Card, Typography } from "@mui/material";
-import Divider from "@mui/material/Divider";
+import { useEffect, useState } from "react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const jokeCard = () => {
+const JokeCard = () => {
+  const [jokes, setJokes] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [punchline, setPunchline] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const ret = await fetch("https://api.sampleapis.com/jokes/goodJokes");
+      const data = await ret.json();
+      setJokes(data);
+    })();
+  }, []);
+
   return (
     <>
       <div className="header">
         <Card className="header-card"> </Card>
       </div>
-      <div className="joke-card">
-        <Card className="joke-answer-card">
-          <Typography className="joke-text"> enter your joke here </Typography>
-          <Typography className="answer-text">
-            enter your answer here
-          </Typography>
-        </Card>
-      </div>
+      <Card
+        className="joke-answer-card"
+        onClick={() => setPunchline(!punchline)}
+      >
+        <div className="jokersondeck">
+          <Typography className="joke-text"> {jokes[index]?.setup} </Typography>
+          {punchline && (
+            <Typography className="punchline-text">
+              {jokes[index]?.punchline}
+            </Typography>
+          )}
+        </div>
+        <div className="arrows">
+          <ArrowBackIosIcon
+            className="arrow"
+            onClick={() => setIndex(index - 1) && setPunchline({ ...false })}
+          />
+          <ArrowForwardIosIcon
+            className="arrow"
+            onClick={() => setIndex(index + 1) && setPunchline({ ...false })}
+          />
+        </div>
+      </Card>
     </>
   );
 };
-
-export default jokeCard;
+export default JokeCard;
