@@ -1,4 +1,5 @@
 import "./App.css";
+import JokeCard from "./components/JokeCard";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
 
@@ -9,9 +10,7 @@ const theme = createTheme({
   },
   palette: {
     mode: "light",
-    background: {
-      default: "#00acc1",
-    },
+
     primary: {
       main: "#5ddef4",
     },
@@ -24,7 +23,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App"></div>
+      <div className="App">
+        <JokeCard />
+      </div>
     </ThemeProvider>
   );
 }
