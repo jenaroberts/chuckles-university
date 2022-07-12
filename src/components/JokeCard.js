@@ -1,4 +1,4 @@
-import { Card, Typography } from "@mui/material";
+import { Button, Card, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -21,10 +21,7 @@ const JokeCard = () => {
       <div className="header">
         <Card className="header-card"> </Card>
       </div>
-      <Card
-        className="joke-answer-card"
-        onClick={() => setPunchline(!punchline)}
-      >
+      <Card className="joke-answer-card">
         <div className="jokersondeck">
           <Typography className="joke-text"> {jokes[index]?.setup} </Typography>
           {punchline && (
@@ -32,16 +29,38 @@ const JokeCard = () => {
               {jokes[index]?.punchline}
             </Typography>
           )}
+          {!punchline && (
+            <Button
+              className="solution"
+              variant="contained"
+              color="secondary"
+              onClick={() => setPunchline(!punchline)}
+            >
+              Punchline
+            </Button>
+          )}
         </div>
         <div className="arrows">
-          <ArrowBackIosIcon
-            className="arrow"
-            onClick={() => setIndex(index - 1) && setPunchline({ ...false })}
-          />
-          <ArrowForwardIosIcon
-            className="arrow"
-            onClick={() => setIndex(index + 1) && setPunchline({ ...false })}
-          />
+          <IconButton
+            disabled={index === 0}
+            onClick={() => {
+              setIndex(index - 1);
+              setPunchline(false);
+            }}
+          >
+            {" "}
+            <ArrowBackIosIcon className="arrow" />
+          </IconButton>
+
+          <IconButton
+            disabled={index + 1 === jokes.length}
+            onClick={() => {
+              setIndex(index + 1);
+              setPunchline(false);
+            }}
+          >
+            <ArrowForwardIosIcon className="arrow" />
+          </IconButton>
         </div>
       </Card>
     </>

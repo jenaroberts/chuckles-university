@@ -15,7 +15,7 @@ const theme = createTheme({
       main: "#5ddef4",
     },
     secondary: {
-      main: "#007c91",
+      main: "#9c27b0",
     },
   },
 });
